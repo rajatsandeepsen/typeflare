@@ -1,4 +1,5 @@
-import type { CF_Bindings, CF_Bindings_Convertor } from "./types";
+import type { TypeFlare } from "./core";
+import type { CF_Bindings } from "./types";
 import type { Wrangler } from "./wrangler";
 
 type Variables = object;
@@ -9,12 +10,10 @@ type Env = {
 	Variables?: Variables;
 };
 
-type GenerateEnv<E extends CF_Bindings, V extends Variables> = {
-	Bindings: CF_Bindings_Convertor<E>;
+export type TypeFlareHono<
+	W extends CF_Bindings & Wrangler,
+	V extends Variables = {},
+> = {
+	Bindings: TypeFlare<W>;
 	Variables: V;
 };
-
-export type TypeFlareHono<
-	W extends Wrangler,
-	V extends Variables = {},
-> = GenerateEnv<W["typeflare"], W["vars"] & V>;

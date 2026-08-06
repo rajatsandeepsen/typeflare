@@ -1,6 +1,6 @@
-import type { CF_Bindings } from "./types";
+import type { TypeFlareBindings } from "./types";
 
 export type Wrangler = {
 	vars?: Record<string, string>;
-	typeflare: CF_Bindings;
+	typeflare: TypeFlareBindings;
 };

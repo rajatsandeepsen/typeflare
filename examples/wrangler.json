@@ -13,8 +13,20 @@
 		}
 	],
 
+	"kv_namespaces": [
+		{
+			"binding": "KV",
+			"id": "<kv-namespace-id>",
+			"preview_id": "<kv-preview-namespace-id>"
+		}
+	],
+
 	"typeflare": {
 		"d1_databases": {
+			"DATABASE": true
+		},
+		"kv_namespaces": {
+			"KV": true,
 			"DATABASE": true
 		}
 	}

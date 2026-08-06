@@ -2,11 +2,11 @@
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"definitions": {
 		"stringMap": {
-			"description": "Key is the Bindings Name, Value is just any boolean",
+			"description": "Key is the Bindings Name, Value is just true or null",
 			"type": "object",
 			"additionalProperties": {
-				"description": "Boolean, just a placeholder",
-				"type": "boolean"
+				"description": "If using the binding, set true. Else set null to omit the binding from infering",
+				"enum": [true, null]
 			}
 		}
 	},
