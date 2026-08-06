@@ -23,28 +23,23 @@
 			"types": "./dist/index.d.ts",
 			"import": "./dist/index.mjs",
 			"require": "./dist/index.js"
-		},
-		"./hono": {
-			"types": "./dist/hono.d.ts",
-			"import": "./dist/hono.mjs",
-			"require": "./dist/hono.js"
 		}
 	},
 	"dependencies": {
-		"@cloudflare/workers-types": "^5.20260804.1",
-		"hono": "^4.13.0"
+		"@cloudflare/workers-types": "^5.20260804.1"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.5.7",
 		"@types/node": "20.17.24",
 		"biome-md": "^0.0.6",
+		"elysia": "^1.4.29",
+		"hono": "^4.13.0",
 		"tsdown": "^0.15.10",
 		"typescript": "5.6.3",
 		"wrangler": "^4.119.0"
 	},
 	"peerDependencies": {
-		"@cloudflare/workers-types": "^5.0.0",
-		"hono": "^4.0.0"
+		"@cloudflare/workers-types": "^5.0.0"
 	},
 	"engines": {
 		"node": ">=18"

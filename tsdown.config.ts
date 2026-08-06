@@ -2,7 +2,7 @@ import { defineConfig } from "tsdown";
 
 export default defineConfig([
 	{
-		entry: ["src/index.ts", "src/hono.ts"],
+		entry: ["src/index.ts"],
 		format: ["cjs", "esm"],
 		dts: {
 			sourcemap: false,

@@ -68,10 +68,10 @@ export default {
 
 ```ts
 import { Hono } from "hono";
-import type { TypeFlare } from "typeflare/hono";
+import type { TypeFlareHono } from "typeflare";
 import type Wrangler from "./wrangler.json";
 
-type Honotype = TypeFlare<typeof Wrangler>;
+type Honotype = TypeFlareHono<typeof Wrangler>;
 const app = new Hono<Honotype>();
 
 app.get("/", async (c) => {
@@ -96,10 +96,57 @@ Make sure to enable `resolveJsonModule` in your `tsconfig.json` file.
 }
 ```
 
-## Coming Soon
+## Cloudflare Bindings, Global Import (Advanced)
+
+Create a file called `env.ts` and write this code
+
+```ts
+import type Wrangler from "./wrangler.json";
+import type { TypeFlare } from "typeflare";
+
+type Bindings = TypeFlare<typeof Wrangler>;
+
+export const env = {} as Bindings;
+```
+
+Now add this path in your `tsconfig.json` file to fool you local TypeScript linter
+
+```jsonc
+{
+	"compilerOptions": {
+		"paths": {
+			// fool the linter
+			"cloudflare:workers": ["./env.ts"]
+		}
+	}
+}
+```
+
+Now import Cloudflare bindings as global `env`.
+
+```ts
+import { env } from "cloudflare:workers";
+import { Elysia } from "elysia";
+import { CloudflareAdapter } from "elysia/adapter/cloudflare-worker";
+
+const app = new Elysia({
+	adapter: CloudflareAdapter,
+})
+	.get("/", async () => {
+		const { results } = await env.DATABASE.prepare(
+			"SELECT * FROM Customers",
+		).run();
+		return results;
+	})
+	.compile();
+
+export default app;
+```
+
+## Work in Progress
 
 - [x] Hono
-- [ ] Elysia
+- [x] Elysia
 - [ ] Nitro
 
 ## Issue

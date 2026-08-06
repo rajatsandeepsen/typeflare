@@ -9,7 +9,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"inlineSources": false,
 		"isolatedModules": true,
-		"moduleResolution": "node",
+		"moduleResolution": "nodenext",
 		"resolveJsonModule": true,
 		"noUnusedLocals": false,
 		"noUnusedParameters": false,
@@ -20,9 +20,14 @@
 		"strict": true,
 		"types": ["@types/node"],
 		"lib": ["dom", "ES2021"],
-		"module": "ESNext",
+		"module": "nodenext",
 		"target": "ES2021",
-		"stripInternal": true
+		"stripInternal": true,
+		"paths": {
+			"cloudflare:workers": ["./example/env.ts"],
+			"typeflare": ["./src/index.ts"],
+			"typeflare/schema.json": ["./schema.json"]
+		}
 	},
 	"include": ["."],
 	"exclude": ["*/dist", "dist", "build", "node_modules"]

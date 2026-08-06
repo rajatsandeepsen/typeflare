@@ -1,0 +1,19 @@
+{
+	"$schema": "typeflare/schema.json",
+	"name": "test",
+	"main": "./server.ts",
+
+	"d1_databases": [
+		{
+			"binding": "DATABASE",
+			"database_name": "<d1-database-name>",
+			"database_id": "<d1-database-id>"
+		}
+	],
+
+	"typeflare": {
+		"d1_databases": {
+			"DATABASE": true
+		}
+	}
+}
