@@ -2,7 +2,7 @@ import { env } from "cloudflare:workers";
 import { Elysia } from "elysia";
 import { CloudflareAdapter } from "elysia/adapter/cloudflare-worker";
 
-const app = new Elysia({
+export default new Elysia({
 	adapter: CloudflareAdapter,
 })
 	.get("/", async () => {
@@ -12,5 +12,3 @@ const app = new Elysia({
 		return results;
 	})
 	.compile();
-
-export default app;

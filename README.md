@@ -2,11 +2,21 @@
     <img alt="cover" src="https://github.com/rajatsandeepsen/typeflare/blob/main/cover.png?raw=true" />
 </a>
 
-# TypeFlare - Cloudflare Bindings
+# TypeFlare = CloudFlare + TypeScript
 
-Infer TypeScript Cloudflare bindings from `wrangler.json` file.
+Infer TypeScript Cloudflare Worker bindings directly from `wrangler.json` file.
 
-No need to run `npx wrangler types` or update global `types.d.ts` every time you change configuration.
+No need to run `npx wrangler types` periodically or update global `types.d.ts` every time you change configuration.
+
+- No CLI ✗
+- No extra files ✗
+- No build time checks ✗
+- No runtime checks ✗
+- Single source of truth ✓
+- Strong type checking ✓
+- Just 3 lines of code ✓
+
+Set up once, Enjoy Cloudflare Worker binding forever.
 
 ## Setup
 
@@ -48,11 +58,17 @@ Create `wrangler.json` file with necessary BINDINGS and Variables
 }
 ```
 
-Then You can import the default type generic instance `TypeFlare` from `typeflare`:
+Then You can import the default generic type instance `TypeFlare` from `typeflare`:
 
 ```ts
 import { TypeFlare } from "typeflare";
+
+import type Wrangler from "./wrangler.json";
+
+type Bindings = TypeFlare<typeof Wrangler>;
 ```
+
+That's it, just three lines of extra code.
 
 ## Cloudflare Workers
 
@@ -65,9 +81,7 @@ type Bindings = TypeFlare<typeof Wrangler>;
 
 export default {
 	async fetch(request, env) {
-		const { results } = await env.DATABASE.prepare(
-			"SELECT * FROM Customers",
-		).run();
+		const { results } = await env.DATABASE.prepare("SELECT * FROM Customers").run();
 		return Response.json(results);
 	},
 } satisfies ExportedHandler<Bindings>;
@@ -84,9 +98,7 @@ type Honotype = TypeFlareHono<typeof Wrangler>;
 const app = new Hono<Honotype>();
 
 app.get("/", async (c) => {
-	const { results } = await c.env.DATABASE.prepare(
-		"SELECT * FROM Customers",
-	).run();
+	const { results } = await c.env.DATABASE.prepare("SELECT * FROM Customers").run();
 	return c.json(results);
 });
 
@@ -106,7 +118,7 @@ Make sure to enable `resolveJsonModule` in your `tsconfig.json` file.
 }
 ```
 
-## Cloudflare Bindings, Global Import (Advanced)
+## Cloudflare Bindings, Global Import
 
 Create a file called `env.ts` and write this code
 
@@ -139,25 +151,20 @@ import { env } from "cloudflare:workers";
 import { Elysia } from "elysia";
 import { CloudflareAdapter } from "elysia/adapter/cloudflare-worker";
 
-const app = new Elysia({
-	adapter: CloudflareAdapter,
-})
+export default new Elysia({ adapter: CloudflareAdapter })
 	.get("/", async () => {
-		const { results } = await env.DATABASE.prepare(
-			"SELECT * FROM Customers",
-		).run();
+		const { results } = await env.DATABASE.prepare("SELECT * FROM Customers").run();
 		return results;
 	})
 	.compile();
-
-export default app;
 ```
 
-## Work in Progress
+## Features
 
-- [x] Hono
-- [x] Elysia
-- [ ] Nitro
+- [x] Check missing bindings
+- [x] Omit bindings from config file
+- [x] Check duplicate binding names
+- [ ] Import `.jsonc` file
 
 ## Issue
 

@@ -1,5 +1,6 @@
 import type {
 	Ai,
+	AiSearchNamespace,
 	AnalyticsEngineDataset,
 	D1Database,
 	DispatchNamespace,
@@ -11,7 +12,9 @@ import type {
 	R2Bucket,
 	RateLimit,
 	SecretsStoreSecret,
+	SendEmail,
 	Service,
+	UnsafeTraceMetrics,
 	Vectorize,
 	WorkerVersionMetadata,
 	Workflow,
@@ -36,6 +39,10 @@ export type CF_Bindings<V = unknown> = {
 	services?: V;
 	vectorize?: V;
 	ai?: V;
+	ai_search?: V;
+	ai_search_namespace?: V;
+	send_email?: V;
+	unsafe?: V;
 	workflows?: V;
 	assets?: V;
 	browser?: V;
@@ -64,6 +71,10 @@ type Convert<
 			CreateRecord<ValidB, "vectorize", Vectorize> &
 			CreateRecord<ValidB, "workflows", Workflow> &
 			CreateRecord<ValidB, "ai", Ai> &
+			CreateRecord<ValidB, "ai_search", AiSearchNamespace> &
+			CreateRecord<ValidB, "ai_search_namespace", AiSearchNamespace> &
+			CreateRecord<ValidB, "send_email", SendEmail> &
+			CreateRecord<ValidB, "unsafe", UnsafeTraceMetrics> &
 			CreateRecord<ValidB, "assets", Fetcher> &
 			CreateRecord<ValidB, "browser", Fetcher> &
 			CreateRecord<ValidB, "images", ImagesBinding> &
