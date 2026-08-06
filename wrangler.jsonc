@@ -1,0 +1,369 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "test",
+	"main": "./test.ts",
+	"compatibility_date": "2025-05-05",
+	"compatibility_flags": ["nodejs_compat"],
+	"workers_dev": true,
+	"preview_urls": true,
+	"keep_vars": true,
+	"send_metrics": false,
+	"dependencies_instrumentation": {
+		"enabled": true
+	},
+	"minify": true,
+	"keep_names": true,
+	"upload_source_maps": true,
+	"no_bundle": false,
+	"find_additional_modules": true,
+	"base_dir": "./",
+	"preserve_file_names": false,
+	"logpush": false,
+
+	"build": {
+		"command": "npm run build",
+		"cwd": ".",
+		"watch_dir": ["src", "test.ts"]
+	},
+
+	"define": {
+		"__APP_VERSION__": "\"1.0.0\""
+	},
+
+	"alias": {
+		"node-fetch": "./polyfills/fetch.ts"
+	},
+
+	"rules": [
+		{
+			"type": "Text",
+			"globs": ["**/*.md"],
+			"fallthrough": true
+		},
+		{
+			"type": "Data",
+			"globs": ["**/*.bin"]
+		}
+	],
+
+	"limits": {
+		"cpu_ms": 50,
+		"subrequests": 150
+	},
+
+	"placement": {
+		"mode": "smart"
+	},
+
+	"observability": {
+		"enabled": true,
+		"logs": {
+			"head_sampling_rate": 1
+		},
+		"traces": {
+			"enabled": true,
+			"head_sampling_rate": 0.1
+		}
+	},
+
+	"dev": {
+		"ip": "127.0.0.1",
+		"port": 8787,
+		"local_protocol": "http",
+		"upstream_protocol": "https",
+		"generate_types": true,
+		"enable_containers": true
+	},
+
+	"triggers": {
+		"crons": ["* * * * *"]
+	},
+
+	"routes": [
+		{
+			"pattern": "example.com/*",
+			"zone_name": "example.com"
+		},
+		{
+			"pattern": "shop.example.com",
+			"custom_domain": true
+		}
+	],
+
+	"vars": {
+		"NODE_ENV": "production",
+		"BUN_VERSION": "1.2.15",
+		"EXAMPLE_FLAG": "true"
+	},
+
+	"secrets": {
+		"required": ["API_KEY", "DB_PASSWORD"]
+	},
+
+	"kv_namespaces": [
+		{
+			"binding": "KV",
+			"id": "kv_namespace_id",
+			"preview_id": "kv_preview_namespace_id"
+		}
+	],
+
+	"r2_buckets": [
+		{
+			"binding": "R2",
+			"bucket_name": "example-bucket",
+			"preview_bucket_name": "example-bucket-preview",
+			"jurisdiction": "eu"
+		}
+	],
+
+	"d1_databases": [
+		{
+			"binding": "DATABASE",
+			"database_name": "example-d1-db",
+			"database_id": "d1_database_id",
+			"preview_database_id": "d1_preview_database_id",
+			"migrations_table": "d1_migrations",
+			"migrations_dir": "./migrations",
+			"migrations_pattern": "./migrations/*.sql"
+		}
+	],
+
+	"hyperdrive": [
+		{
+			"binding": "HYPERDRIVE",
+			"id": "hyperdrive_id"
+		}
+	],
+
+	"vectorize": [
+		{
+			"binding": "VECTORIZE",
+			"index_name": "example-index"
+		}
+	],
+
+	"ai_search_namespaces": [
+		{
+			"binding": "AI_SEARCH_NS",
+			"namespace": "default"
+		}
+	],
+
+	"ai_search": [
+		{
+			"binding": "AI_SEARCH_INSTANCE",
+			"instance_name": "example-instance"
+		}
+	],
+
+	"queues": {
+		"producers": [
+			{
+				"binding": "QUEUE",
+				"queue": "example-queue",
+				"delivery_delay": 10
+			}
+		],
+		"consumers": [
+			{
+				"queue": "example-queue",
+				"max_batch_size": 10,
+				"max_batch_timeout": 5,
+				"max_retries": 3,
+				"dead_letter_queue": "example-queue-dlq",
+				"max_concurrency": 2,
+				"retry_delay": 30,
+				"visibility_timeout_ms": 120000
+			}
+		]
+	},
+
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "DO_EXAMPLE",
+				"class_name": "ExampleDurableObject"
+			},
+			{
+				"name": "MY_CONTAINER",
+				"class_name": "ContainerDO"
+			}
+		]
+	},
+
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["ExampleDurableObject", "ContainerDO"]
+		}
+	],
+
+	"containers": [
+		{
+			"class_name": "ContainerDO",
+			"image": "./Dockerfile",
+			"max_instances": 10,
+			"instance_type": "basic",
+			"image_build_context": "./",
+			"image_vars": {
+				"FOO": "BAR"
+			},
+			"constraints": {
+				"regions": ["ENAM", "WEUR"],
+				"jurisdiction": "eu"
+			},
+			"ssh": {
+				"enabled": true,
+				"port": 22
+			}
+		}
+	],
+
+	"services": [
+		{
+			"binding": "SERVICE",
+			"service": "example-worker-service",
+			"entrypoint": "Entrypoint"
+		}
+	],
+
+	"analytics_engine_datasets": [
+		{
+			"binding": "ANALYTICS",
+			"dataset": "example_dataset"
+		}
+	],
+
+	"dispatch_namespaces": [
+		{
+			"binding": "DISPATCHER",
+			"namespace": "example-dispatch-namespace",
+			"outbound": {
+				"service": "example-dispatched-worker",
+				"parameters": ["params_object"]
+			}
+		}
+	],
+
+	"mtls_certificates": [
+		{
+			"binding": "MTLS_CERT",
+			"certificate_id": "mtls_certificate_id"
+		}
+	],
+
+	"tail_consumers": [
+		{
+			"service": "example-tail-consumer",
+			"environment": "production"
+		}
+	],
+
+	"unsafe": {
+		"bindings": [
+			{
+				"name": "RAW_BINDING",
+				"type": "plain_text",
+				"value": "raw-value"
+			}
+		]
+	},
+
+	"browser": {
+		"binding": "BROWSER"
+	},
+
+	"ai": {
+		"binding": "AI"
+	},
+
+	"images": {
+		"binding": "IMAGES"
+	},
+
+	"version_metadata": {
+		"binding": "VERSION_METADATA"
+	},
+
+	"send_email": [
+		{
+			"name": "EMAIL",
+			"destination_address": "hello@example.com"
+		}
+	],
+
+	"workflows": [
+		{
+			"binding": "WORKFLOW",
+			"name": "example-workflow",
+			"class_name": "ExampleWorkflow",
+			"schedules": ["*/10 * * * *"]
+		}
+	],
+
+	"assets": {
+		"directory": "./public",
+		"binding": "ASSETS",
+		"html_handling": "force-trailing-slash",
+		"not_found_handling": "404-page",
+		"run_worker_first": ["/api/*", "!/api/docs/*"]
+	},
+
+	"typeflare": {
+		"kv_namespaces": {
+			"KV": true
+		},
+		"r2_buckets": {
+			"R2": true
+		},
+		"d1_databases": {
+			"DATABASE": true
+		},
+		"hyperdrive": {
+			"HYPERDRIVE": true
+		},
+		"vectorize": {
+			"VECTORIZE": true
+		},
+		"ai_search_namespaces": {
+			"AI_SEARCH_NS": true
+		},
+		"ai_search": {
+			"AI_SEARCH_INSTANCE": true
+		},
+		"queues": {
+			"QUEUE": true
+		},
+		"durable_objects": {
+			"DO_EXAMPLE": true,
+			"MY_CONTAINER": true
+		},
+		"services": {
+			"SERVICE": true
+		},
+		"analytics_engine_datasets": {
+			"ANALYTICS": true
+		},
+		"dispatch_namespaces": {
+			"DISPATCHER": true
+		},
+		"mtls_certificates": {
+			"MTLS_CERT": true
+		},
+		"send_email": {
+			"EMAIL": true
+		},
+		"workflows": {
+			"WORKFLOW": true
+		},
+		"unsafe": {
+			"RAW_BINDING": true
+		},
+		"browser": { "BROWSER": true },
+		"ai": { "AI": true },
+		"images": { "IMAGES": true },
+		"assets": { "ASSETS": true },
+		"version_metadata": { "VERSION_METADATA": true }
+	}
+}
