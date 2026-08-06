@@ -1,7 +1,9 @@
 {
 	"$schema": "typeflare/schema.json",
-	"name": "test",
-	"main": "./server.ts",
+	"name": "example",
+	"main": "./worker.ts",
+	"compatibility_date": "2025-05-05",
+	"compatibility_flags": ["nodejs_compat"],
 
 	"d1_databases": [
 		{

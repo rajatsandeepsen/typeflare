@@ -6,6 +6,8 @@
 
 Infer TypeScript Cloudflare bindings from `wrangler.json` file.
 
+No need to run `npx wrangler types` or update global `types.d.ts` every time you change configuration.
+
 ## Setup
 
 You can install the package using npm, bun, nubs or pnpm
@@ -18,6 +20,7 @@ Create `wrangler.json` file with necessary BINDINGS and Variables
 
 ```jsonc
 {
+	// to get type suggestions while updating bindings
 	"$schema": "typeflare/schema.json",
 	"name": "test",
 	"main": "./server.ts",
@@ -91,6 +94,7 @@ Make sure to enable `resolveJsonModule` in your `tsconfig.json` file.
 ```jsonc
 {
 	"compilerOptions": {
+		// to enable .json file import
 		"resolveJsonModule": true
 	}
 }

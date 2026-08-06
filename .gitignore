@@ -26,6 +26,7 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 .eslintcache
 .cache
 *.tsbuildinfo
+.wrangler
 
 # IntelliJ based IDEs
 .idea
@@ -39,3 +40,4 @@ test.ts
 */**/.mcmd
 
 schema/*
+worker-configuration.d.ts
