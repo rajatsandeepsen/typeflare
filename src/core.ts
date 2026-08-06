@@ -8,4 +8,6 @@ export type TypeFlare<
 	K = keyof WWT,
 > = K extends keyof W["typeflare"]
 	? Bindings<W["typeflare"]>
-	: "Error: TypeFlares config is out of sync, Please match keys with rest of wrangler file.";
+	: K extends string
+		? `ERROR: TypeFlares config is out of sync. Missing [${K}]`
+		: "ERROR: TypeFlares config is out of sync. Please match keys with rest of wrangler file.";

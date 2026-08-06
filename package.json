@@ -1,7 +1,7 @@
 {
 	"name": "typeflare",
 	"description": "Infer typescript cloudflare bindings from wrangler.json files",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"main": "./dist/index.js",
 	"module": "./dist/index.mjs",
 	"types": "./dist/index.d.ts",

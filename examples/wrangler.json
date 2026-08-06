@@ -26,8 +26,7 @@
 			"DATABASE": true
 		},
 		"kv_namespaces": {
-			"KV": true,
-			"DATABASE": true
+			"KV": true
 		}
 	}
 }

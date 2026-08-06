@@ -30,13 +30,19 @@ Create `wrangler.json` file with necessary BINDINGS and Variables
 			"binding": "DATABASE",
 			"database_name": "<d1-database-name>",
 			"database_id": "<d1-database-id>"
+		},
+		{
+			"binding": "ANOTHER_DATABASE",
+			"database_name": "<d1-database-name>",
+			"database_id": "<d1-database-id>"
 		}
 	],
 
 	// very important step
 	"typeflare": {
 		"d1_databases": {
-			"DATABASE": true
+			"DATABASE": true,
+			"ANOTHER_DATABASE": null // to omit
 		}
 	}
 }
