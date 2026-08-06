@@ -1,0 +1,55 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"definitions": {
+		"stringMap": {
+			"description": "Key is the Bindings Name, Value is just any boolean",
+			"type": "object",
+			"additionalProperties": {
+				"description": "Boolean, just a placeholder",
+				"type": "boolean"
+			}
+		}
+	},
+	"allOf": [
+		{
+			"$ref": "./node_modules/wrangler/config-schema.json"
+		},
+		{
+			"$ref": "./schema/wrangler.json"
+		},
+		{
+			"type": "object",
+			"properties": {
+				"typeflare": {
+					"description": "Configuration for TypeFlare package to help with infering bindings from wrangler.json",
+					"type": "object",
+					"properties": {
+						"kv_namespaces": { "$ref": "#/definitions/stringMap" },
+						"r2_buckets": { "$ref": "#/definitions/stringMap" },
+						"d1_databases": { "$ref": "#/definitions/stringMap" },
+						"hyperdrive": { "$ref": "#/definitions/stringMap" },
+						"vectorize": { "$ref": "#/definitions/stringMap" },
+						"ai_search_namespaces": { "$ref": "#/definitions/stringMap" },
+						"ai_search": { "$ref": "#/definitions/stringMap" },
+						"queues": { "$ref": "#/definitions/stringMap" },
+						"durable_objects": { "$ref": "#/definitions/stringMap" },
+						"services": { "$ref": "#/definitions/stringMap" },
+						"analytics_engine_datasets": { "$ref": "#/definitions/stringMap" },
+						"dispatch_namespaces": { "$ref": "#/definitions/stringMap" },
+						"mtls_certificates": { "$ref": "#/definitions/stringMap" },
+						"send_email": { "$ref": "#/definitions/stringMap" },
+						"workflows": { "$ref": "#/definitions/stringMap" },
+						"unsafe": { "$ref": "#/definitions/stringMap" },
+						"browser": { "$ref": "#/definitions/stringMap" },
+						"ai": { "$ref": "#/definitions/stringMap" },
+						"images": { "$ref": "#/definitions/stringMap" },
+						"assets": { "$ref": "#/definitions/stringMap" },
+						"version_metadata": { "$ref": "#/definitions/stringMap" }
+					},
+					"additionalProperties": true
+				}
+			},
+			"required": ["typeflare"]
+		}
+	]
+}

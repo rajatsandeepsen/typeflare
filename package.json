@@ -6,9 +6,13 @@
 	"module": "./dist/index.mjs",
 	"types": "./dist/index.d.ts",
 	"files": [
-		"dist/**/*"
+		"dist/**/*",
+		"./schema.json",
+		"./schema/wrangler.json"
 	],
 	"scripts": {
+		"prepublishOnly": "bun run build && bun run transform",
+		"transform": "bun run ./script/transform.ts",
 		"build": "tsdown",
 		"build:watch": "tsdown --watch",
 		"check": "tsc --noEmit"
