@@ -4,6 +4,7 @@ import type {
 	AnalyticsEngineDataset,
 	D1Database,
 	DispatchNamespace,
+	DurableObjectNamespace,
 	Fetcher,
 	Hyperdrive,
 	ImagesBinding,
@@ -14,7 +15,6 @@ import type {
 	SecretsStoreSecret,
 	SendEmail,
 	Service,
-	UnsafeTraceMetrics,
 	Vectorize,
 	WorkerVersionMetadata,
 	Workflow,
@@ -40,9 +40,8 @@ export type CF_Bindings<V = unknown> = {
 	vectorize?: V;
 	ai?: V;
 	ai_search?: V;
-	ai_search_namespace?: V;
+	ai_search_namespaces?: V;
 	send_email?: V;
-	unsafe?: V;
 	workflows?: V;
 	assets?: V;
 	browser?: V;
@@ -62,6 +61,7 @@ type Convert<
 			CreateRecord<ValidB, "r2_buckets", R2Bucket> &
 			CreateRecord<ValidB, "kv_namespaces", KVNamespace> &
 			CreateRecord<ValidB, "hyperdrive", Hyperdrive> &
+			CreateRecord<ValidB, "durable_objects", DurableObjectNamespace> &
 			CreateRecord<ValidB, "dispatch_namespaces", DispatchNamespace> &
 			CreateRecord<ValidB, "mtls_certificates", Fetcher> &
 			CreateRecord<ValidB, "queues", Queue> &
@@ -72,9 +72,8 @@ type Convert<
 			CreateRecord<ValidB, "workflows", Workflow> &
 			CreateRecord<ValidB, "ai", Ai> &
 			CreateRecord<ValidB, "ai_search", AiSearchNamespace> &
-			CreateRecord<ValidB, "ai_search_namespace", AiSearchNamespace> &
+			CreateRecord<ValidB, "ai_search_namespaces", AiSearchNamespace> &
 			CreateRecord<ValidB, "send_email", SendEmail> &
-			CreateRecord<ValidB, "unsafe", UnsafeTraceMetrics> &
 			CreateRecord<ValidB, "assets", Fetcher> &
 			CreateRecord<ValidB, "browser", Fetcher> &
 			CreateRecord<ValidB, "images", ImagesBinding> &
