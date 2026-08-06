@@ -36,7 +36,6 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.5.7",
-		"@types/bun": "^1.2.17",
 		"@types/node": "20.17.24",
 		"biome-md": "^0.0.6",
 		"tsdown": "^0.15.10",
@@ -44,7 +43,8 @@
 		"wrangler": "^4.119.0"
 	},
 	"peerDependencies": {
-		"zod": "^3.0.0"
+		"@cloudflare/workers-types": "^5.0.0",
+		"hono": "^4.0.0"
 	},
 	"engines": {
 		"node": ">=18"
@@ -64,9 +64,10 @@
 		"url": "https://github.com/rajatsandeepsen/typeflare/issues"
 	},
 	"keywords": [
-		"hono",
 		"cloudflare",
+		"bindings",
 		"wrangler",
-		"typescript"
+		"typescript",
+		"hono"
 	]
 }

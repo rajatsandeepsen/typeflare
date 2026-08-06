@@ -14,14 +14,6 @@ You can install the package using npm, bun, nubs or pnpm
 npm i typeflare
 ```
 
-## Generic Instance
-
-You can import the default type generic instance `TypeFlare` from `typeflare`:
-
-```ts
-import { TypeFlare } from "typeflare";
-```
-
 Create `wrangler.json` file with necessary BINDINGS and Variables
 
 ```jsonc
@@ -34,7 +26,7 @@ Create `wrangler.json` file with necessary BINDINGS and Variables
 		{
 			"binding": "DATABASE",
 			"database_name": "<d1-database-name>",
-			"database_id": "<d1-database-id>",
+			"database_id": "<d1-database-id>"
 		}
 	],
 
@@ -42,9 +34,15 @@ Create `wrangler.json` file with necessary BINDINGS and Variables
 	"typeflare": {
 		"d1_databases": {
 			"DATABASE": true
-		},
+		}
 	}
 }
+```
+
+Then You can import the default type generic instance `TypeFlare` from `typeflare`:
+
+```ts
+import { TypeFlare } from "typeflare";
 ```
 
 ## Cloudflare Workers
@@ -54,13 +52,15 @@ import type { TypeFlare } from "typeflare";
 import { type ExportedHandler, Response } from "@cloudflare/workers-types";
 import type Wrangler from "./wrangler.json";
 
-type Bindings = TypeFlare<typeof Wrangler>
+type Bindings = TypeFlare<typeof Wrangler>;
 
 export default {
 	async fetch(request, env) {
-		const { results } = await env.DATABASE.prepare("SELECT * FROM Customers").run();
-		return Response.json(results)
-	}
+		const { results } = await env.DATABASE.prepare(
+			"SELECT * FROM Customers",
+		).run();
+		return Response.json(results);
+	},
 } satisfies ExportedHandler<Bindings>;
 ```
 
@@ -71,15 +71,29 @@ import { Hono } from "hono";
 import type { TypeFlare } from "typeflare/hono";
 import type Wrangler from "./wrangler.json";
 
-type Honotype = TypeFlare<typeof Wrangler>
+type Honotype = TypeFlare<typeof Wrangler>;
 const app = new Hono<Honotype>();
 
 app.get("/", async (c) => {
-	const { results } = await c.env.DATABASE.prepare("SELECT * FROM Customers").run();
-	return c.json(results)
+	const { results } = await c.env.DATABASE.prepare(
+		"SELECT * FROM Customers",
+	).run();
+	return c.json(results);
 });
 
 export default app;
+```
+
+## TypeScript Requirement
+
+Make sure to enable `resolveJsonModule` in your `tsconfig.json` file.
+
+```jsonc
+{
+	"compilerOptions": {
+		"resolveJsonModule": true
+	}
+}
 ```
 
 ## Coming Soon
@@ -87,6 +101,14 @@ export default app;
 - [x] Hono
 - [ ] Elysia
 - [ ] Nitro
+
+## Issue
+
+TypeScript doesn't support `.jsonc` or `.toml` imports.
+
+So renamed your `wrangler.jsonc` or `wrangler.toml` files to `wrangler.json`.
+
+Or convert to `.json` on build time.
 
 ## Documentation
 
