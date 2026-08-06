@@ -1,5 +1,5 @@
 {
-	"$schema": "typeflare/schema.json",
+	"$schema": "node_modules/typeflare/schema.json",
 	"name": "example",
 	"main": "./worker.ts",
 	"compatibility_date": "2025-05-05",

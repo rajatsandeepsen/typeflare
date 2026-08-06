@@ -2,9 +2,9 @@ import { Hono } from "hono";
 import type { TypeFlareHono } from "typeflare";
 import type Wrangler from "./wrangler.json";
 
-type Honotype = TypeFlareHono<typeof Wrangler>;
+type HonoType = TypeFlareHono<typeof Wrangler>;
 
-const app = new Hono<Honotype>();
+const app = new Hono<HonoType>();
 
 app.get("/", async (c) => {
 	const { results } = await c.env.DATABASE.prepare(

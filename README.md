@@ -31,7 +31,7 @@ Create `wrangler.json` file with necessary BINDINGS and Variables
 ```jsonc
 {
 	// to get type suggestions while updating bindings
-	"$schema": "typeflare/schema.json",
+	"$schema": "node_modules/typeflare/schema.json",
 	"name": "test",
 	"main": "./server.ts",
 
@@ -94,8 +94,8 @@ import { Hono } from "hono";
 import type { TypeFlareHono } from "typeflare";
 import type Wrangler from "./wrangler.json";
 
-type Honotype = TypeFlareHono<typeof Wrangler>;
-const app = new Hono<Honotype>();
+type HonoType = TypeFlareHono<typeof Wrangler>;
+const app = new Hono<HonoType>();
 
 app.get("/", async (c) => {
 	const { results } = await c.env.DATABASE.prepare("SELECT * FROM Customers").run();

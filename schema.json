@@ -12,9 +12,6 @@
 	},
 	"allOf": [
 		{
-			"$ref": "./node_modules/wrangler/config-schema.json"
-		},
-		{
 			"$ref": "./schema/wrangler.json"
 		},
 		{
