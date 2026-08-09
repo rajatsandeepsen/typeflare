@@ -1,7 +1,9 @@
-import type { GetEnv } from "typeflare";
+import type { GetDefaultExport } from "typeflare";
 import type Wrangler from "./wrangler.json";
 
-export const env = {} as GetEnv<typeof Wrangler>;
+type Exports = GetDefaultExport<typeof Wrangler>;
+
+export default {} as Exports; // includes env, waitUntil, withEnv etc
 
 /**
  * Don't need to .gitignore this file

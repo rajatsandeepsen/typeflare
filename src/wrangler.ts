@@ -1,8 +1,12 @@
 import type { TypeFlareBindings } from "./types";
 
-type Json = string | number | boolean | null | Array<Json>;
+export type JsonKeys = string | number | boolean | null;
+export type Json =
+	| JsonKeys
+	| Record<string, JsonKeys | Array<Json>>
+	| Array<Json>;
 
 export type Wrangler = {
-	vars?: Json | Record<string, Json>;
+	vars?: Json;
 	typeflare: TypeFlareBindings;
 };

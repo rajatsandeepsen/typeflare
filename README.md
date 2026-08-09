@@ -124,11 +124,11 @@ Create a file called `env.ts` and write this code
 
 ```ts
 import type Wrangler from "./wrangler.json";
-import type { TypeFlare } from "typeflare";
+import type { GetEnv } from "typeflare";
 
-type Bindings = TypeFlare<typeof Wrangler>;
+type Env = GetEnv<typeof Wrangler>
 
-export const env = {} as Bindings;
+export const env = {} as Env;
 ```
 
 Now add this path in your `tsconfig.json` file to fool you local TypeScript linter
@@ -160,6 +160,17 @@ export default new Elysia({ adapter: CloudflareAdapter })
 ```
 
 No matter what's your `tsconfig` configurations, Cloudflare will override the import `cloudflare:workers` with its own.
+
+If you want more Cloudflare export, write this inside `env.ts`.
+
+```ts
+import type Wrangler from "./wrangler.json";
+import type { GetDefaultExport } from "typeflare";
+
+type Exports = GetDefaultExport<typeof Wrangler>;
+
+export default {} as Exports; // includes env, waitUntil, withEnv etc
+```
 
 ## Features
 
