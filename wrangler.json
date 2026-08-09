@@ -93,7 +93,8 @@
 	"vars": {
 		"NODE_ENV": "production",
 		"BUN_VERSION": "1.2.15",
-		"EXAMPLE_FLAG": "true"
+		"EXAMPLE_FLAG": "true",
+		"DEV": 1
 	},
 
 	"secrets": {

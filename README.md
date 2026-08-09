@@ -159,6 +159,8 @@ export default new Elysia({ adapter: CloudflareAdapter })
 	.compile();
 ```
 
+No matter what's your `tsconfig` configurations, Cloudflare will override the import `cloudflare:workers` with its own.
+
 ## Features
 
 - [x] Check missing bindings
