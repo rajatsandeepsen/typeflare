@@ -3,7 +3,7 @@ import type Wrangler from "./wrangler.json";
 
 type Exports = GetDefaultExport<typeof Wrangler>;
 
-export default {} as Exports; // includes env, waitUntil, withEnv etc
+export const { env, waitUntil, withEnv } = {} as Exports;
 
 /**
  * Don't need to .gitignore this file

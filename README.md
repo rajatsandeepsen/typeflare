@@ -169,7 +169,7 @@ import type { GetDefaultExport } from "typeflare";
 
 type Exports = GetDefaultExport<typeof Wrangler>;
 
-export default {} as Exports; // includes env, waitUntil, withEnv etc
+export const { env, waitUntil, withEnv } = {} as Exports;
 ```
 
 ## Features
