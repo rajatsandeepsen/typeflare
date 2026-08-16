@@ -96,6 +96,14 @@
 		"EXAMPLE_FLAG": "true"
 	},
 
+	"env": {
+		"development": {
+			"vars": {
+				"DEV": 1
+			}
+		}
+	},
+
 	"secrets": {
 		"required": ["API_KEY", "DB_PASSWORD"]
 	},

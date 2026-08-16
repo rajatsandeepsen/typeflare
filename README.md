@@ -35,6 +35,20 @@ Create `wrangler.json` file with necessary BINDINGS and Variables
 	"name": "test",
 	"main": "./server.ts",
 
+	"vars": {
+		"NODE_ENV": "production",
+		"BUN_VERSION": "1.2.15",
+		"EXAMPLE_FLAG": "true"
+	},
+
+	"env": {
+		"development": {
+			"vars": {
+				"DEV": 1
+			}
+		}
+	},
+
 	"d1_databases": [
 		{
 			"binding": "DATABASE",
@@ -172,11 +186,53 @@ type Exports = GetDefaultExport<typeof Wrangler>;
 export const { env, waitUntil, withEnv } = {} as Exports;
 ```
 
+## Extending process.env with vars
+
+Create a file called `global.d.ts` on your project root folder and write this code
+
+```ts
+import type Wrangler from "./wrangler.json";
+import type { GetVars } from "typeflare";
+
+type Vars = GetVars<typeof Wrangler>;
+
+declare global {
+	namespace NodeJS {
+		interface ProcessEnv extends Vars {
+			// ADDITIONAL_ENV: string
+		}
+	}
+}
+```
+
+Now add this file path in your `tsconfig.json` file to extend your `process.env` with wrangler vars.
+
+```jsonc
+{
+	"compilerOptions": {},
+	"include": [
+		"./**/*.ts",
+		
+		// to extend types globally
+		"./global.d.ts",
+	]
+}		
+```
+
+Usage
+
+```ts
+console.log(process.env.BUN_VERSION)
+console.log(process.env.EXAMPLE_FLAG)
+console.log(process.env.DEV)
+```
+
 ## Features
 
 - [x] Check missing bindings
 - [x] Omit bindings from config file
 - [x] Check duplicate binding names
+- [x] Extends `process.env` with wrangler vars
 - [ ] Import `.jsonc` file
 
 ## Issue

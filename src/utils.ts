@@ -21,3 +21,30 @@ export type CreateRecordIfValid<B, K extends PropertyKey, V> = K extends keyof B
 		? Record<B[K], V>
 		: {}
 	: {};
+
+type UnionToIntersection<U> = [U] extends [never]
+	? never
+	: (U extends unknown ? (arg: U) => void : never) extends (
+				arg: infer I,
+			) => void
+		? I
+		: never;
+
+export type HasKey<T, K extends PropertyKey> = K extends keyof T ? true : false;
+
+type GetByKeyUnion<T, K extends PropertyKey> = T extends object
+	?
+			| (HasKey<T, K> extends true ? T[K & keyof T] : never)
+			| { [P in keyof T]: GetByKeyUnion<T[P], K> }[keyof T]
+	: never;
+
+export type Get<T, K extends PropertyKey> = [GetByKeyUnion<T, K>] extends [
+	never,
+]
+	? {}
+	: UnionToIntersection<GetByKeyUnion<T, K>>;
+
+export type Equals<X, Y> =
+	(<T>() => T extends X ? 1 : 2) extends <T>() => T extends Y ? 1 : 2
+		? true
+		: false;

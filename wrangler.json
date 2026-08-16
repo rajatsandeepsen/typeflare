@@ -93,8 +93,15 @@
 	"vars": {
 		"NODE_ENV": "production",
 		"BUN_VERSION": "1.2.15",
-		"EXAMPLE_FLAG": "true",
-		"DEV": 1
+		"EXAMPLE_FLAG": "true"
+	},
+
+	"env": {
+		"development": {
+			"vars": {
+				"DEV": 1
+			}
+		}
 	},
 
 	"secrets": {

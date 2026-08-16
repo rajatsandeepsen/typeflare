@@ -5,6 +5,26 @@
 	"compatibility_date": "2025-05-05",
 	"compatibility_flags": ["nodejs_compat"],
 
+	"vars": {
+		"NODE_ENV": "production",
+		"BUN_VERSION": "1.2.15",
+		"EXAMPLE_FLAG": "true"
+	},
+
+	"env": {
+		"staging": {},
+		"production": {
+			"vars": {
+				"PROD": 1
+			}
+		},
+		"development": {
+			"vars": {
+				"DEV": 1
+			}
+		}
+	},
+
 	"d1_databases": [
 		{
 			"binding": "DATABASE",

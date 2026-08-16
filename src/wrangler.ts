@@ -8,5 +8,11 @@ export type Json =
 
 export type Wrangler = {
 	vars?: Json;
+	env?: Record<
+		string,
+		{
+			vars?: Json;
+		}
+	>;
 	typeflare: TypeFlareBindings;
 };
