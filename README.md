@@ -14,7 +14,6 @@ No need to run `npx wrangler types` periodically or update global `types.d.ts` e
 - No extra files ✗
 - No build time checks ✗
 - No runtime checks ✗
-
 - Single source of truth ✓
 - Strong type checking ✓
 - Just 3 lines of code ✓
@@ -33,7 +32,7 @@ Create `wrangler.json` file with necessary BINDINGS and Variables
 
 ```jsonc
 {
-	// to get type suggestions while updating bindings
+	// replace $schema to get better type suggestions
 	"$schema": "node_modules/typeflare/schema.json",
 	"name": "my-worker",
 	"main": "./server.ts",
@@ -78,7 +77,7 @@ Create `wrangler.json` file with necessary BINDINGS and Variables
 Then You can import the default generic type instance `TypeFlare` from `typeflare`:
 
 ```ts
-import { TypeFlare } from "typeflare";
+import type { TypeFlare } from "typeflare";
 
 import type Wrangler from "./wrangler.json";
 
@@ -234,7 +233,7 @@ console.log(process.env.DEV)
 ## Features
 
 - [x] Check missing bindings
-- [x] Omit bindings from config file
+- [x] Omit bindings from configuration file
 - [x] Check duplicate binding names
 - [x] Extends `process.env` with wrangler vars
 - [ ] Import `.jsonc` file
