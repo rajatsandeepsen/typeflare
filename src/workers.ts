@@ -1,4 +1,5 @@
-import type { TypeFlare } from "typeflare";
+import type { ExportedHandler } from "@cloudflare/workers-types";
+import type { TypeFlare } from "./core";
 import type { CF_Bindings } from "./types";
 import type { Get, HasKey } from "./utils";
 import type { Wrangler } from "./wrangler";
@@ -27,3 +28,10 @@ export type GetDefaultExport<
 	waitUntil: waitUntil;
 	withEnv: withEnv<E>;
 };
+
+export type TypeFlareHandler<
+	W extends CF_Bindings & Wrangler,
+	QueueHandlerMessage = unknown,
+	CfHostMetadata = unknown,
+	Props = unknown,
+> = ExportedHandler<TypeFlare<W>, QueueHandlerMessage, CfHostMetadata, Props>;

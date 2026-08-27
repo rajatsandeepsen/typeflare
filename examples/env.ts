@@ -1,7 +1,9 @@
 import type { GetEnv } from "typeflare";
 import type Wrangler from "./wrangler.json";
 
-export const env = {} as GetEnv<typeof Wrangler>;
+export declare const env: GetEnv<typeof Wrangler>;
+// or
+// export const env = {} as GetEnv<typeof Wrangler>;
 
 /**
  * Don't need to .gitignore this file

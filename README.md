@@ -6,17 +6,20 @@
 
 Infer TypeScript Cloudflare Worker bindings directly from `wrangler.json` file.
 
+Instead of managing 14K+ lines of generated typescript file, just install `typeflare`.
+
 No need to run `npx wrangler types` periodically or update global `types.d.ts` every time you change configuration.
 
 - No CLI ✗
 - No extra files ✗
 - No build time checks ✗
 - No runtime checks ✗
+
 - Single source of truth ✓
 - Strong type checking ✓
 - Just 3 lines of code ✓
 
-Set up once, Enjoy Cloudflare Worker binding forever.
+Set up once, Enjoy Cloudflare Worker bindings forever.
 
 ## Setup
 
@@ -32,7 +35,7 @@ Create `wrangler.json` file with necessary BINDINGS and Variables
 {
 	// to get type suggestions while updating bindings
 	"$schema": "node_modules/typeflare/schema.json",
-	"name": "test",
+	"name": "my-worker",
 	"main": "./server.ts",
 
 	"vars": {
@@ -87,18 +90,15 @@ That's it, just three lines of extra code.
 ## Cloudflare Workers
 
 ```ts
-import type { TypeFlare } from "typeflare";
-import { type ExportedHandler, Response } from "@cloudflare/workers-types";
+import { Response, type TypeFlareHandler } from "typeflare";
 import type Wrangler from "./wrangler.json";
-
-type Bindings = TypeFlare<typeof Wrangler>;
 
 export default {
 	async fetch(request, env) {
 		const { results } = await env.DATABASE.prepare("SELECT * FROM Customers").run();
 		return Response.json(results);
 	},
-} satisfies ExportedHandler<Bindings>;
+} satisfies TypeFlareHandler<typeof Wrangler>;
 ```
 
 ## Hono
@@ -143,6 +143,8 @@ import type { GetEnv } from "typeflare";
 type Env = GetEnv<typeof Wrangler>
 
 export const env = {} as Env;
+// or 
+export declare const env: Env;
 ```
 
 Now add this path in your `tsconfig.json` file to fool you local TypeScript linter
@@ -184,6 +186,8 @@ import type { GetDefaultExport } from "typeflare";
 type Exports = GetDefaultExport<typeof Wrangler>;
 
 export const { env, waitUntil, withEnv } = {} as Exports;
+// or
+export declare const { env, waitUntil, withEnv }: Exports;
 ```
 
 ## Extending process.env with vars
@@ -239,9 +243,7 @@ console.log(process.env.DEV)
 
 TypeScript doesn't support `.jsonc` or `.toml` imports.
 
-So renamed your `wrangler.jsonc` or `wrangler.toml` files to `wrangler.json`.
-
-Or convert to `.json` on build time.
+So renamed & convert your `wrangler.jsonc` or `wrangler.toml` files to `wrangler.json`.
 
 ## Documentation
 
