@@ -38,6 +38,7 @@ Create `wrangler.json` file with necessary BINDINGS and Variables
 	"main": "./server.ts",
 
 	"vars": {
+		// for strict variables
 		"NODE_ENV": "production",
 		"BUN_VERSION": "1.2.15",
 		"EXAMPLE_FLAG": "true"
@@ -45,6 +46,7 @@ Create `wrangler.json` file with necessary BINDINGS and Variables
 
 	"env": {
 		"development": {
+			// for optional variables
 			"vars": {
 				"DEV": 1
 			}
@@ -57,18 +59,20 @@ Create `wrangler.json` file with necessary BINDINGS and Variables
 			"database_name": "<d1-database-name>",
 			"database_id": "<d1-database-id>"
 		},
-		{
-			"binding": "ANOTHER_DATABASE",
-			"database_name": "<d1-database-name>",
-			"database_id": "<d1-database-id>"
-		}
 	],
+
+	"assets": {
+		"directory": "public",
+		"binding": "ASSETS",
+	},
 
 	// very important step
 	"typeflare": {
 		"d1_databases": {
-			"DATABASE": true,
-			"ANOTHER_DATABASE": null // to omit
+			"DATABASE": true // to pick
+		},
+		"assets": {
+			"ASSETS": null // to omit
 		}
 	}
 }
@@ -95,6 +99,7 @@ import type Wrangler from "./wrangler.json";
 export default {
 	async fetch(request, env) {
 		const { results } = await env.DATABASE.prepare("SELECT * FROM Customers").run();
+		// 					^? env.DATABASE : D1Database
 		return Response.json(results);
 	},
 } satisfies TypeFlareHandler<typeof Wrangler>;
@@ -112,6 +117,7 @@ const app = new Hono<HonoType>();
 
 app.get("/", async (c) => {
 	const { results } = await c.env.DATABASE.prepare("SELECT * FROM Customers").run();
+	// 						^? c.env.DATABASE : D1Database
 	return c.json(results);
 });
 
@@ -152,7 +158,7 @@ Now add this path in your `tsconfig.json` file to fool you local TypeScript lint
 {
 	"compilerOptions": {
 		"paths": {
-			// fool the linter
+			// to fool the linter
 			"cloudflare:workers": ["./env.ts"]
 		}
 	}
@@ -169,6 +175,7 @@ import { CloudflareAdapter } from "elysia/adapter/cloudflare-worker";
 export default new Elysia({ adapter: CloudflareAdapter })
 	.get("/", async () => {
 		const { results } = await env.DATABASE.prepare("SELECT * FROM Customers").run();
+		// 						^? env.DATABASE : D1Database
 		return results;
 	})
 	.compile();
@@ -202,10 +209,12 @@ type Vars = GetVars<typeof Wrangler>;
 declare global {
 	namespace NodeJS {
 		interface ProcessEnv extends Vars {
-			// ADDITIONAL_ENV: string
+			ADDITIONAL_ENV: string
 		}
 	}
 }
+
+export {}
 ```
 
 Now add this file path in your `tsconfig.json` file to extend your `process.env` with wrangler vars.
@@ -225,9 +234,9 @@ Now add this file path in your `tsconfig.json` file to extend your `process.env`
 Usage
 
 ```ts
-console.log(process.env.BUN_VERSION)
-console.log(process.env.EXAMPLE_FLAG)
-console.log(process.env.DEV)
+console.log(process.env.BUN_VERSION) // string
+console.log(process.env.EXAMPLE_FLAG) // string
+console.log(process.env.DEV) // string | undefined
 ```
 
 ## Features
